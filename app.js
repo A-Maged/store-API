@@ -62,7 +62,7 @@ app.use('/api/v1/stores', storeRoutes);
 
 // - client-side Route
 app.use(function(req, res){
-		res.sendFile(path.resolve(__dirname, 'public/index.html'))	
+	res.sendFile(path.resolve(__dirname, 'public/index.html'))	
 });
 
 
