@@ -37,7 +37,14 @@ ReactDOM.render(
                 <Route exact path="/" component={Stores}/>
                 <Route path="/add" component={AddStore}/>
                 <Route path="/singleStore/:id" component={SingleStore}/>
-                <Route component={NoMatch}/>
+
+                {/*
+                    a last route to catch 404
+                    <Route component={NoMatch}/>            
+                */}
+
+                {/* redirect to the store instead of a 404 */}
+                <Route component={Stores}/>
             </Switch>
 
         </div>

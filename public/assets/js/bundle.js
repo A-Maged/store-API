@@ -11470,7 +11470,7 @@ _reactDom2.default.render(_react2.default.createElement(
             _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _index2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/add', component: _AddStore2.default }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/singleStore/:id', component: _SingleStore2.default }),
-            _react2.default.createElement(_reactRouterDom.Route, { component: NoMatch })
+            _react2.default.createElement(_reactRouterDom.Route, { component: _index2.default })
         )
     )
 ), document.getElementById('root'));
