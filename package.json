@@ -8,7 +8,7 @@
     "watch-react-server": "supervisor  -i views,app.js  ./public/react-server.js",
     "watch-assets": "webpack --watch",
     "build": "webpack",
-    "dev": "concurrently --kill-others \"npm run watch-assets\" \"npm run watch-api-server\"  \"watch-react-server\"  "
+    "dev": "concurrently --kill-others \"npm run watch-assets\" \"npm run watch-api-server\"  \"npm run watch-react-server\"  "
   },
   "dependencies": {
     "body-parser": "^1.17.2",
