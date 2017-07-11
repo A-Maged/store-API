@@ -27,8 +27,14 @@ exports.addStore = (req, res)=>{
 
 	const store = new Store(req.body);
 
-	store.save();
-	
+	store.save(function(error, store) {
+        if (error){
+			res.json({error: error})
+		}
+	});	
 }
 
-
+exports.updateStore = (req, res)=>{
+	const store = Store.findByIdAndUpdate( );
+	
+}
