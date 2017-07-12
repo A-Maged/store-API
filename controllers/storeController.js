@@ -34,7 +34,16 @@ exports.addStore = (req, res)=>{
 	});	
 }
 
+exports.updateStoreForm = (req, res)=>{
+	Store.findOne({ slug: req.params.storeSlug},function(err, store){
+		res.json(store);
+	});
+	
+}
+
+
 exports.updateStore = (req, res)=>{
+	
 	const store = Store.findByIdAndUpdate( );
 	
 }
