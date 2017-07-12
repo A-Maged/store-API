@@ -4,14 +4,10 @@ const Store = mongoose.model('Store');
 
 exports.homePage = (req, res)=>{
 	// find and pass all stores to UI 
-		Store.find((err, allStores)=>{
+	Store.find((err, allStores)=>{
+		res.json(allStores);
+	});
 
-			res.json(allStores);
-		});
-		// res.json([
-		// 	{name: 'cmmmmmmm'},
-		// 	{name: 'ooooooo'}
-		// ])
 },
 
 
@@ -34,16 +30,19 @@ exports.addStore = (req, res)=>{
 	});	
 }
 
-exports.updateStoreForm = (req, res)=>{
-	Store.findOne({ slug: req.params.storeSlug},function(err, store){
-		res.json(store);
-	});
-	
-}
-
 
 exports.updateStore = (req, res)=>{
+
+	Store.findOneAndUpdate({slug: req.params.storeSlug}, req.body, {
+		new: true,
+		runValidators: true
+	}, function(error, store){
+			if(error){
+				console.log('error:      ', error);
+			}
+			res.json({store: store});
+	});
 	
-	const store = Store.findByIdAndUpdate( );
-	
+
+	// TODO: update slug when the name is modified
 }

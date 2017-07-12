@@ -16,11 +16,6 @@ router.get('/show/:storeSlug', storeController.showSingleStore);
 router.post('/add', storeController.addStore);
 
 
-
-// update store form 
-router.get('/update/:storeSlug', storeController.updateStoreForm);
-
-
 // update store 
 router.post('/update/:storeSlug', storeController.updateStore);
 
