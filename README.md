@@ -15,10 +15,12 @@ GET  /api/v1/stores/show/:storeSlug
 ## add a store
 ```
 POST  /api/v1/stores/add
+body data : {name: String, description: String}
 ```
 
 ## update a store
 ```
-POST  /api/v1/stores/update/:storeSlugadd
+POST  /api/v1/stores/update/:storeSlug
+body data : {name: String, description: String}
 ```
 
