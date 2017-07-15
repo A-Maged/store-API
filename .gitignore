@@ -3,7 +3,8 @@
 /node_modules
 
 TODO
-mock_data
+data_schema
+
 
 # misc
 .vscode
