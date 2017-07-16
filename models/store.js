@@ -6,21 +6,58 @@ mongoose.Promise = global.Promise;
 
 // define the schema
 const storeSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        trim: true,
-        required: 'Please enter a store name',
-        unique: true
+	id: 			{
+			type: Number,
+			unique: true,		
+	},
+	name: 			{
+			type: String,
+			trim: true,
+			required: 'Please enter a store name',
+			unique: true
     },
-
-    slug: String,
-
-    description: {
-        type: String,
-        trim: true
+	slug: 			{
+			type: String,
+			required: true,
+			unique: true
     },
+	description: 	String,
+	location: {
+			address : {
+					type: String,
+					required: 'enter a store address',
+			},
+			longitude: 	{
+					type: Number,
+					required: 'enter a store longitude',
+			},
+			latitude: 	{
+					type: Number,
+					required: 'enter a store latitude',
+			}
+	},
+	featuredImg:	String,
+	coverImgLink: 	String,
+	catagories: 	{
+			typw: [String],
+			required: 'enter at least one catagory'
+	},
+	hasDelivery: 	{
+			type: Boolean,
+			default: false
+	},
+	deliveryCities: {
+			type: [String],
+	},
 
-    tags: [String]
+	items:[
+			{
+				id:				Number,
+				name: 			String,
+				price : 		Number,
+				featuredImg :	String,					
+			}
+	]
 });
 
 
@@ -38,5 +75,7 @@ storeSchema.pre('save', function(next) {
 
     // TODO: make sure every slug is unique
 });
+
+
 
 module.exports = mongoose.model('Store', storeSchema);

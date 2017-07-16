@@ -1,3 +1,4 @@
+const slug = require('slugs');
 const mongoose = require('mongoose');
 const Store = mongoose.model('Store');
 
@@ -45,4 +46,12 @@ exports.updateStore = (req, res)=>{
 	
 
 	// TODO: update slug when the name is modified
+}
+
+
+function addSlug(collection){
+	return new Promise(function(resolve, reject) {
+		collection.slug = slug(collection.name);            		
+		resolve();
+	});
 }
