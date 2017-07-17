@@ -6,10 +6,6 @@ mongoose.Promise = global.Promise;
 
 // define the schema
 const storeSchema = new mongoose.Schema({
-	id: 			{
-			type: Number,
-			unique: true,		
-	},
 	name: 			{
 			type: String,
 			trim: true,
@@ -18,29 +14,23 @@ const storeSchema = new mongoose.Schema({
     },
 	slug: 			{
 			type: String,
-			required: true,
-			unique: true
     },
 	description: 	String,
 	location: {
 			address : {
 					type: String,
-					required: 'enter a store address',
 			},
 			longitude: 	{
 					type: Number,
-					required: 'enter a store longitude',
 			},
 			latitude: 	{
 					type: Number,
-					required: 'enter a store latitude',
 			}
 	},
 	featuredImg:	String,
 	coverImgLink: 	String,
 	catagories: 	{
-			typw: [String],
-			required: 'enter at least one catagory'
+			type: [String],
 	},
 	hasDelivery: 	{
 			type: Boolean,
@@ -66,14 +56,11 @@ const storeSchema = new mongoose.Schema({
 storeSchema.pre('save', function(next) {
 
     if (this.isModified('name') ) {
-        // transform the store name into a slug using "slugs" library
-        // and save it in the store's slug property
+        // transform the store name into a slug using "slugs" library        // and save it in the store's slug property
         this.slug = slug(this.name);            
     }
 
     next()
-
-    // TODO: make sure every slug is unique
 });
 
 

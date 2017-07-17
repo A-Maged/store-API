@@ -28,6 +28,9 @@ exports.addStore = (req, res)=>{
         if (error){
 			res.json({error: error})
 		}
+		else{
+			res.json(store)			
+		}
 	});	
 }
 
