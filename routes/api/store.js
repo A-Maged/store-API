@@ -3,6 +3,9 @@ var router = express.Router();
 
 var storeController = require('../../controllers/storeController')
 
+// test what you want using this route
+router.get('/test', storeController.test );
+
 
 // stores listing
 router.get('/', storeController.homePage );

@@ -3,9 +3,20 @@ const mongoose = require('mongoose');
 const Store = mongoose.model('Store');
 
 
+
+exports.test = (req, res)=>{
+	// find and pass all stores to UI 
+	Store.find({}, 'name', (err, allStores)=>{
+		res.json(allStores);
+	});
+
+},
+
+
+
 exports.homePage = (req, res)=>{
 	// find and pass all stores to UI 
-	Store.find((err, allStores)=>{
+	Store.find({}, 'name slug location featuredImg', (err, allStores)=>{
 		res.json(allStores);
 	});
 
