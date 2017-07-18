@@ -63,6 +63,41 @@ exports.updateStore = (req, res)=>{
 }
 
 
+
+exports.addItem = (req, res)=>{
+	var item = req.body;
+	item.storeSlug = req.params.storeSlug;
+
+
+	Store.findOneAndUpdate({slug: req.params.storeSlug}, {$push: {items: item}}, {
+		new: true,
+		runValidators: true
+	}, function(error, store){
+			if(error){
+				console.log('error:      ', error);
+				res.json({error: error});
+			}
+			else{
+				res.json({store: store});				
+			}
+	});
+		
+}
+
+
+
+exports.showItem = (req, res)=>{
+
+	Store.aggregate(
+		{ $match: 
+			{'stores.items': req.params.itemId}
+		}
+	)
+		
+}
+
+
+
 function addSlug(collection){
 	return new Promise(function(resolve, reject) {
 		collection.slug = slug(collection.name);            		

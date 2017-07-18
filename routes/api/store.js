@@ -18,6 +18,12 @@ router.get('/show/:storeSlug', storeController.showSingleStore);
 // add a store
 router.post('/add', storeController.addStore);
 
+// add an item to a store
+router.post('/:storeSlug/add', storeController.addItem);
+
+// show single item
+router.get('/show/:storeSlug/:itemId', storeController.showItem);
+
 
 // update store 
 router.post('/update/:storeSlug', storeController.updateStore);
