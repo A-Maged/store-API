@@ -86,16 +86,46 @@ exports.addItem = (req, res)=>{
 
 
 
-exports.showItem = (req, res)=>{
 
+
+
+exports.showItem = (req, res)=>{
+	
+		Store.aggregate(
+				// get the right store
+				{$match: {'slug': req.params.storeSlug}}				
+				// only show items array
+				,{$project : { items : 1, _id: 0 } }
+				// seperate the array into individual documents
+				,{$unwind: '$items'}
+				// get the right item
+				,{$match: {'items._id': mongoose.Types.ObjectId(req.params.itemId)}}
+
+			,function(err, item){
+				res.json(item[0].items)
+			}
+		)
+			
+	}
+
+
+
+
+/*
+exports.AllItemsInStore = (req, res)=>{
 	Store.aggregate(
-		{ $match: 
-			{'stores.items': req.params.itemId}
+		[
+
+			{$match: {'slug': req.params.storeSlug}}				
+			,{$project : { items : 1 } }
+
+		],function(err, item){
+			res.json(item)
 		}
 	)
-		
+			
 }
-
+*/
 
 
 function addSlug(collection){
