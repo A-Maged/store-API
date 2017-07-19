@@ -40,14 +40,36 @@ const storeSchema = new mongoose.Schema({
 			type: [String],
 	},
 
-	items:[
+	
+	items:[{
+		name: {
+			type: String,
+			required: true
+		},
+		
+		description: 	String,
+		
+		price: {
+			type: Number,
+			required: true		
+		},
+
+		featuredImg :	String,
+
+		galleryImgs:	[String],
+
+		catagory: 		String,
+
+		reviews:[ 
 			{
-				id:				Number,
-				name: 			String,
-				price : 		Number,
-				featuredImg :	String,					
+				username: String,
+				data:	String,
+				stars: 	Number
 			}
-	]
+		]
+	}]
+
+
 });
 
 

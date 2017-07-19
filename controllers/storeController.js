@@ -59,7 +59,7 @@ exports.updateStore = (req, res)=>{
 	});
 	
 
-	// TODO: update slug when the name is modified
+	// TODO: update slug when the name is modified too
 }
 
 
