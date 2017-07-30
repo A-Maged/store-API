@@ -50,6 +50,8 @@ mongoose.connection.on('error', (err)=>{
 
 // - require models
 require('./models/store')
+app.use(passport.initialize());
+app.use(passport.session());
 require('./passportSetup.js')
 
 
