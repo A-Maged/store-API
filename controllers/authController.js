@@ -1,8 +1,16 @@
 const passport = require('passport');
 
-
-
-
 exports.login = function(req, res){
-	res.redirect('http://127.0.0.1:3000/api/v1/users/')
+	res.send('success');
+}
+
+
+exports.isLoggedIn = function(req, res, next){
+	if(req.isAuthenticated()){
+		next();
+		return;
+	}
+	else{
+		res.send('not authinticated');		
+	}
 }

@@ -5,7 +5,7 @@ var authController = require('../../controllers/authController')
 const passport = require('passport');
 
 
-router.get('/', userController.findAllUsers);
+router.get('/', authController.isLoggedIn , userController.findAllUsers);
 
 router.post('/register', userController.addUser);
 

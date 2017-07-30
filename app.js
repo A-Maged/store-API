@@ -1,4 +1,6 @@
 const express = require('express');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -13,7 +15,12 @@ require('dotenv').config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
+app.use(session({
+	secret: process.env.SECRET,
+	key: process.env.KEY,
+	resave: false,
+	saveUninitialized: false
+  }));
 
 // - set neccesary http-headers
 app.use(function(req, res, next){
