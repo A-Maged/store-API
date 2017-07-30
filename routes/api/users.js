@@ -14,7 +14,7 @@ router.post('/register', userController.addUser);
 
 router.post('/login', passport.authenticate('local', { failureRedirect: '/loginFailed' }),
 	function(req, res) {
-		res.redirect('/api/v1/stores/show/omar-store');
+		res.redirect('/api/v1/users');
 	}
 );
 

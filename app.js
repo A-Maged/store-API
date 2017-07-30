@@ -1,27 +1,18 @@
 const express = require('express');
 const path = require('path');
-const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const hbs = require('express-handlebars');
 const passport = require('passport');
-const LocalStrategy = require('passport-local')
-require('dotenv').config();
 const app = express();
+require('dotenv').config();
 
 
 // - setup common middilewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-
-// - view engine setup
-// app.engine('hbs', hbs())
-app.set('views', path.join(__dirname, 'views'));
-app.engine('hbs', hbs({ extname: 'hbs'}));
-app.set('view engine', 'hbs');
 
 
 // - set neccesary http-headers
@@ -34,12 +25,11 @@ app.use(function(req, res, next){
 
 
 
-// - setup mongoose and models 
+// - setup mongoose connection 
 mongoose.connect( process.env.DATABASE , {useMongoClient: true} );
 mongoose.Promise = global.Promise;
 mongoose.connection.on('error', (err)=>{
 	console.error(err.message);
-	
 	console.error('retrying to connect in 5s');
 	setTimeout( ()=>{
 		mongoose.connect( process.env.DATABASE , {useMongoClient: true} );
@@ -50,13 +40,20 @@ mongoose.connection.on('error', (err)=>{
 
 // - require models
 require('./models/store')
+User = require('./models/user')
+
+
+
+// - setup Passport
 app.use(passport.initialize());
 app.use(passport.session());
-require('./passportSetup.js')
+passport.use(User.createStrategy());
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 
 
-// - require/setup Routes
+// - setup Routes
 const usersRoutes = require('./routes/api/users');
 const storeRoutes = require('./routes/api/store')
 app.use('/api/v1/users', usersRoutes);
