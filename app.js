@@ -6,16 +6,31 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const hbs = require('express-handlebars');
+const passport = require('passport');
+const LocalStrategy = require('passport-local')
 require('dotenv').config();
 const app = express();
 
 
+// - setup common middilewares
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // - view engine setup
 // app.engine('hbs', hbs())
 app.set('views', path.join(__dirname, 'views'));
 app.engine('hbs', hbs({ extname: 'hbs'}));
 app.set('view engine', 'hbs');
+
+
+// - set neccesary http-headers
+app.use(function(req, res, next){
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+	next()
+})
 
 
 
@@ -30,42 +45,20 @@ mongoose.connection.on('error', (err)=>{
 		mongoose.connect( process.env.DATABASE , {useMongoClient: true} );
 	},5000)
 })
+
+
+
+// - require models
 require('./models/store')
+require('./passportSetup.js')
 
 
 
-// - setup common middilewares
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-// app.use(express.static(path.join(__dirname, 'public')));
-
-app.use(function(req, res, next){
-	res.setHeader('Access-Control-Allow-Origin', '*');
-	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-	next()
-})
-
-
-// - require Routes
+// - require/setup Routes
 const usersRoutes = require('./routes/api/users');
 const storeRoutes = require('./routes/api/store')
-
-
-// - setup Routes
 app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/stores', storeRoutes);
-
-
-
-// - client-side Route
-// app.use(function(req, res){
-// 	res.sendFile(path.resolve(__dirname, 'public/index.html'))	
-// });
-
-
 
 
 
