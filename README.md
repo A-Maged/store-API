@@ -12,10 +12,45 @@ GET  /api/v1/stores
 GET  /api/v1/stores/show/:storeSlug
 ```
 
+## show single item in a store
+```
+GET  /api/v1/stores/show/:storeSlug/:itemId
+```
+
 ## add a store
 ```
 POST  /api/v1/stores/add
-body data : {name: String, description: String}
+body data : {
+	name: String, 
+	description: String,
+	location: {
+			address : String,
+			longitude: Number,
+			latitude: Number,
+	},
+	featuredImg: String, 
+	coverImgLink: 	String,
+	hasDelivery:Boolean, 
+	deliveryCities: [String]
+}
+```
+
+## add an item to a store
+```
+POST  /api/v1/stores/:storeSlug/add
+body data : [{
+	name:String,
+	description: String,
+	price: Number,
+	featuredImg : String,
+	galleryImgs: [String],
+	catagory: String,
+	reviews:[{
+			username: String,
+			data:	String,
+			stars: 	Number
+		}]
+}]
 ```
 
 ## update a store
