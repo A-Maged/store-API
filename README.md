@@ -56,6 +56,18 @@ body data : [{
 ## update a store
 ```
 POST  /api/v1/stores/update/:storeSlug
-body data : {name: String, description: String}
+body data : {
+	name: String, 
+	description: String,
+	location: {
+		address : String,
+		longitude: Number,
+		latitude: Number,
+	},
+	featuredImg: String, 
+	coverImgLink: 	String,
+	hasDelivery:Boolean, 
+	deliveryCities: [String]
+}
 ```
 
