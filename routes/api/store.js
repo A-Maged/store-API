@@ -1,32 +1,30 @@
 var express = require('express');
 var router = express.Router();
-
+const authController = require('../../controllers/authController');
 var storeController = require('../../controllers/storeController')
 
 // test what you want using this route
 router.get('/test', storeController.test );
 
+// stores listing (PROTECTED)
+router.get('/', authController.loginRequired , storeController.homePage );
 
-// stores listing
-router.get('/', storeController.homePage );
-
-
-// single store  
+// show single store  
 router.get('/show/:storeSlug', storeController.showSingleStore);
-
-
-// add a store
-router.post('/add',  storeController.addStore);
-
-// add an item to a store
-router.post('/:storeSlug/add',  storeController.addItem);
 
 // show single item
 router.get('/show/:storeSlug/:itemId', storeController.showItem);
 
 
-// update store 
-router.post('/update/:storeSlug',  storeController.updateStore);
+
+// add a store (PROTECTED)
+router.post('/add',  authController.loginRequired , storeController.addStore);
+
+// add an item to a store (PROTECTED)
+router.post('/:storeSlug/add',  authController.loginRequired , storeController.addItem);
+
+// update store (PROTECTED)
+router.post('/update/:storeSlug',  authController.loginRequired , storeController.updateStore);
 
 
 
