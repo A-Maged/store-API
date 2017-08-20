@@ -1,26 +1,31 @@
-const mongoose = require('mongoose');
-const passportLocalMongoose = require('passport-local-mongoose');
-const mongooseMongodbErrors = require('mongoose-mongodb-errors');
+'use strict';
 
-// use es6 built-in promise
-mongoose.Promise = global.Promise;
+const uniqid = require('uniqid');
 
-const userSchema = new mongoose.Schema({
-	email:{
+// storesDB connection
+var mongoose = require("../database/storesDB");
+
+
+
+const userSchema = mongoose.Schema({
+	firstname: String,
+	lastname: String,
+	email: {
 		type: String,
-		unique: true,
-		trim: true,
-		required: true
+		required: 'email is required',
+		unique: true
 	},
-	name:{
+	username: {
 		type: String,
-		trim: true,
-		required: true
+		required: 'username is required',
+		unique: true		
+	},
+	password: {
+		type: String,
+		required: 'password is required'
 	}
 });
 
-userSchema.plugin(passportLocalMongoose, {usernameField: 'email'});
-userSchema.plugin(mongooseMongodbErrors);
 
 
 module.exports = mongoose.model('User', userSchema);

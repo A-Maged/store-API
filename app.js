@@ -1,28 +1,51 @@
+'use strict';
+
+/* REQUIRE DEPENDENCIES */
 const express = require('express');
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const passport = require('passport');
+
+
+
+/*  DATABASE */
+var mongoose = require("./database/storesDB");  // storesDB connection
+
+
+
+/* REQUIRE MODELS */
+var store = require('./models/store')
+var User = require('./models/user')
+
+
+
+/* CONFIG */
 const app = express();
 require('dotenv').config();
 
 
-// - setup common middilewares
+
+
+/* MIDDLEWARES */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
+	name:'cm-cookie',
 	secret: process.env.SECRET,
-	key: process.env.KEY,
+	cookie: { secure: false },
+	// store: new redisStore({ host: process.env.REDIS_IP, port: process.env.REDIS_PORT, client: client}),	
 	resave: false,
-	saveUninitialized: false
-  }));
+	saveUninitialized: true ,
+	// cookie: { secure: true },
+}));
 
-// - set neccesary http-headers
+
+
+
+// set neccesary http-headers
 app.use(function(req, res, next){
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -32,39 +55,14 @@ app.use(function(req, res, next){
 
 
 
-// - setup mongoose connection 
-mongoose.connect( process.env.DATABASE , {useMongoClient: true} );
-mongoose.Promise = global.Promise;
-mongoose.connection.on('error', (err)=>{
-	console.error(err.message);
-	console.error('retrying to connect in 5s');
-	setTimeout( ()=>{
-		mongoose.connect( process.env.DATABASE , {useMongoClient: true} );
-	},5000)
-})
 
-
-
-// - require models
-require('./models/store')
-User = require('./models/user')
-
-
-
-// - setup Passport
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(User.createStrategy());
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
-
-
-
-// - setup Routes
+/* ROUTES */
 const usersRoutes = require('./routes/api/users');
 const storeRoutes = require('./routes/api/store')
+const authRoutes = require('./routes/api/auth')
 app.use('/api/v1/users', usersRoutes);
 app.use('/api/v1/stores', storeRoutes);
+app.use('/api/v1/', authRoutes);
 
 
 

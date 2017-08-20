@@ -1,5 +1,8 @@
-const mongoose = require('mongoose');
 const slug = require('slugs');
+
+// storesDB connection
+var mongoose = require("../database/storesDB");
+
 
 // use es6 built-in promise
 mongoose.Promise = global.Promise;
@@ -74,12 +77,13 @@ const storeSchema = new mongoose.Schema({
 
 
 
-// every time this function runs before a store is saved to the DB  
 storeSchema.pre('save', function(next) {
-
     if (this.isModified('name') ) {
-        // transform the store name into a slug using "slugs" library        // and save it in the store's slug property
-        this.slug = slug(this.name);            
+		/* 
+			transform the store name into a slug using "slugs" library        
+			and save it in the store's slug property
+		*/
+		this.slug = slug(this.name);            
     }
 
     next()
