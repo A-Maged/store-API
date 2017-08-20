@@ -24,9 +24,9 @@ body data : {
 	name: String, 
 	description: String,
 	location: {
-			address : String,
-			longitude: Number,
-			latitude: Number,
+		address : String,
+		longitude: Number,
+		latitude: Number,
 	},
 	featuredImg: String, 
 	coverImgLink: 	String,
@@ -46,10 +46,10 @@ body data : [{
 	galleryImgs: [String],
 	catagory: String,
 	reviews:[{
-			username: String,
-			data:	String,
-			stars: 	Number
-		}]
+		username: String,
+		data:	String,
+		stars: 	Number
+	}]
 }]
 ```
 
