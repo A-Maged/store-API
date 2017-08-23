@@ -41,7 +41,7 @@ app.use(session({
 	saveUninitialized: true ,
 	// cookie: { secure: true },
 }));
-
+//TODO: implement rate limiting 
 
 
 
@@ -52,7 +52,7 @@ app.use(function(req, res, next){
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 	next()
 })
-
+//TODO: add security HTTP headers
 
 
 
