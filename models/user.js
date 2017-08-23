@@ -1,11 +1,7 @@
 'use strict';
 
+const mongoose = require('mongoose')
 const uniqid = require('uniqid');
-
-// storesDB connection
-var mongoose = require("../database/storesDB");
-
-
 
 const userSchema = mongoose.Schema({
 	firstname: String,

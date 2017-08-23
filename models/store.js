@@ -1,11 +1,6 @@
+const mongoose = require('mongoose')
 const slug = require('slugs');
 
-// storesDB connection
-var mongoose = require("../database/storesDB");
-
-
-// use es6 built-in promise
-mongoose.Promise = global.Promise;
 
 // define the schema
 const storeSchema = new mongoose.Schema({

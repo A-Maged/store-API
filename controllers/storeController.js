@@ -3,15 +3,6 @@ const mongoose = require('mongoose');
 const Store = mongoose.model('Store');
 
 
-// test Route
-// exports.test = (req, res)=>{
-// 	Store.find({}, 'name', (err, allStores)=>{
-// 		res.json(allStores);
-// 	});
-// },
-
-
-
 exports.homePage = (req, res)=>{
 	// find all stores , return only specified feilds 
 	Store.find({}, 'name slug location featuredImg', (err, allStores)=>{

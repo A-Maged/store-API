@@ -8,22 +8,21 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
+/* CONFIG */
+const app = express();
+require('dotenv').config();
+
 
 
 /*  DATABASE */
-var mongoose = require("./database/storesDB");  // storesDB connection
+var mongooseStoreConnection = require("./database/connectDB")(process.env.STORE_DATABASE)
+
 
 
 
 /* REQUIRE MODELS */
 var store = require('./models/store')
 var User = require('./models/user')
-
-
-
-/* CONFIG */
-const app = express();
-require('dotenv').config();
 
 
 

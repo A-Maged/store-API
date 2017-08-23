@@ -3,9 +3,6 @@ var router = express.Router();
 const authController = require('../../controllers/authController');
 var storeController = require('../../controllers/storeController')
 
-// test what you want using this route
-router.get('/test', storeController.test );
-
 // stores listing (PROTECTED)
 router.get('/', authController.loginRequired , storeController.homePage );
 
