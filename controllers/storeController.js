@@ -3,19 +3,17 @@ const mongoose = require('mongoose');
 const Store = mongoose.model('Store');
 
 
-
-exports.test = (req, res)=>{
-	// find and pass all stores to UI 
-	Store.find({}, 'name', (err, allStores)=>{
-		res.json(allStores);
-	});
-
-},
+// test Route
+// exports.test = (req, res)=>{
+// 	Store.find({}, 'name', (err, allStores)=>{
+// 		res.json(allStores);
+// 	});
+// },
 
 
 
 exports.homePage = (req, res)=>{
-	// find and pass all stores to UI 
+	// find all stores , return only specified feilds 
 	Store.find({}, 'name slug location featuredImg', (err, allStores)=>{
 		res.json(allStores);
 	});
@@ -24,7 +22,7 @@ exports.homePage = (req, res)=>{
 
 
 exports.showSingleStore = (req, res)=>{
-	// find store by slug and pass it
+	// find store by slug 
 	Store.find({slug: req.params.storeSlug}, (err, store)=>{
 		res.json(store[0]);        
 	})
@@ -32,22 +30,20 @@ exports.showSingleStore = (req, res)=>{
 
 
 exports.addStore = (req, res)=>{
-
+	// make a new store object using body data from Http request 
 	const store = new Store(req.body);
-
+	
+	// add store to DB
 	store.save(function(error, store) {
-        if (error){
-			res.json({error: error})
-		}
-		else{
-			res.json(store)			
-		}
+        if (error){ res.json({error: error}) }
+		else{ res.json(store) }
 	});	
 }
 
 
 exports.updateStore = (req, res)=>{
-
+	// find store by slug  
+	// then  update it with body data from Http request 
 	Store.findOneAndUpdate({slug: req.params.storeSlug}, req.body, {
 		new: true,
 		runValidators: true
@@ -57,9 +53,7 @@ exports.updateStore = (req, res)=>{
 			}
 			res.json({store: store});
 	});
-	
 
-	// TODO: update slug when the name is modified too
 }
 
 
@@ -68,7 +62,8 @@ exports.addItem = (req, res)=>{
 	var item = req.body;
 	item.storeSlug = req.params.storeSlug;
 
-
+	// find store by slug
+	// then  add a new item to it using body data from Http request 	
 	Store.findOneAndUpdate({slug: req.params.storeSlug}, {$push: {items: item}}, {
 		new: true,
 		runValidators: true
@@ -105,8 +100,8 @@ exports.showItem = (req, res)=>{
 				res.json(item[0].items)
 			}
 		)
-			
-	}
+}
+
 
 
 
@@ -115,7 +110,6 @@ exports.showItem = (req, res)=>{
 exports.AllItemsInStore = (req, res)=>{
 	Store.aggregate(
 		[
-
 			{$match: {'slug': req.params.storeSlug}}				
 			,{$project : { items : 1 } }
 
@@ -128,9 +122,9 @@ exports.AllItemsInStore = (req, res)=>{
 */
 
 
-function addSlug(collection){
-	return new Promise(function(resolve, reject) {
-		collection.slug = slug(collection.name);            		
-		resolve();
-	});
-}
+// function addSlug(collection){
+// 	return new Promise(function(resolve, reject) {
+// 		collection.slug = slug(collection.name);            		
+// 		resolve();
+// 	});
+// }
