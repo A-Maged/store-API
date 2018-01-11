@@ -1,10 +1,12 @@
 
 # dependencies
 /node_modules
+/database/db
+
 
 TODO
 data_schema
-
+notes.txt
 
 # misc
 .vscode

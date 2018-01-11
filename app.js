@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
 	name:'cm-cookie',
-	secret: process.env.SECRET,
+	secret: toString(process.env.SECRET),
 	cookie: { secure: false },
 	// store: new redisStore({ host: process.env.REDIS_IP, port: process.env.REDIS_PORT, client: client}),	
 	resave: false,
@@ -56,12 +56,7 @@ app.use(function(req, res, next){
 
 
 /* ROUTES */
-const usersRoutes = require('./routes/api/users');
-const storeRoutes = require('./routes/api/store')
-const authRoutes = require('./routes/api/auth')
-app.use('/api/v1/users', usersRoutes);
-app.use('/api/v1/stores', storeRoutes);
-app.use('/api/v1/', authRoutes);
+require('./routes/api/')(app);
 
 
 
