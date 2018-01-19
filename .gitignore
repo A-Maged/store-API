@@ -2,11 +2,14 @@
 # dependencies
 /node_modules
 /database/db
+/test
 
 
 TODO
 data_schema
 notes.txt
+dummyData.txt
+
 
 # misc
 .vscode

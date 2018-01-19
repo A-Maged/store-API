@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "start": "node ./bin/www",
-    "watch": "supervisor ./bin/www"
+    "start-server": "node ./bin/www",
+    "watch-server": "supervisor ./bin/www",
+    "start-DB": "service mongod start",
+    "stop-DB": "service mongod stop"
   },
   "dependencies": {
     "bcrypt": "^1.0.2",
@@ -66,8 +68,10 @@
     "babel-preset-stage-0": "^6.24.1",
     "css-loader": "^0.28.4",
     "extract-text-webpack-plugin": "^2.1.2",
+    "http-post": "^0.1.1",
     "react-hot-loader": "^3.0.0-beta.7",
     "sass-loader": "^6.0.6",
+    "supervisor": "^0.12.0",
     "webpack": "^2.5.0",
     "webpack-dev-server": "^2.5.1"
   }
